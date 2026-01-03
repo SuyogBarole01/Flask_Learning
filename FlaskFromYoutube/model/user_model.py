@@ -1,4 +1,24 @@
+import mysql.connector
+import json
+
 class user_model():
-    def user_signup_model(self):
-        #business logic
-        return 'This is a user signup model'
+    def __init__(self):
+        #Connection Establishment Code
+        try:
+            self.con = mysql.connector.connect(host='localhost',username = 'root', password ="Yashi@07", database = 'Flask_learning')
+            self.cur = self.con.cursor(dictionary = True)
+            print('MySQL connection successful')
+        except:
+            print('Mysql connection error')
+
+    def user_getall_model(self):
+        #Query Execution Code
+        self.cur.execute('SELECT * FROM users')
+        result = self.cur.fetchall()
+
+
+        # result will contain list of dictionaries. These dictionaries will have are rows of table in database.
+        if len(result)>0:
+            return json.dumps(result)
+        else:
+            return "No data found"
