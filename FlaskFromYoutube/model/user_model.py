@@ -6,6 +6,7 @@ class user_model():
         #Connection Establishment Code
         try:
             self.con = mysql.connector.connect(host='localhost',username = 'root', password ="Yashi@07", database = 'Flask_learning')
+            self.con.autocommit = True
             self.cur = self.con.cursor(dictionary = True)
             print('MySQL connection successful')
         except:
@@ -22,3 +23,7 @@ class user_model():
             return json.dumps(result)
         else:
             return "No data found"
+    
+    def user_addone_model(self,data):
+        self.cur.execute(f"INSERT INTO users(name, email, phone, password) VALUES ('{data['name']}','{data['email']}','{data['phone']}','{data['password']}')")
+        return "User Created Successfully"
