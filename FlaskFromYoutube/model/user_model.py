@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 
+
 class user_model():
     def __init__(self):
         #Connection Establishment Code
@@ -20,25 +21,25 @@ class user_model():
 
         # result will contain list of dictionaries. These dictionaries will have are rows of table in database.
         if len(result)>0:
-            return json.dumps(result)
+            return {'payload': result}
         else:
-            return "No data found"
+            return {'message':"No data found"}
     
     def user_addone_model(self,data):
         self.cur.execute(f"INSERT INTO users(name, email, phone, password) VALUES ('{data['name']}','{data['email']}','{data['phone']}','{data['password']}')")
-        return "User Created Successfully"
+        return {'message':"User Created Successfully"}
     
     def user_update_model(self,data):
         self.cur.execute(f"UPDATE users SET name = '{data['name']}', email = '{data['email']}', phone = '{data['phone']}', password = '{data['password']}' where id = '{data['id']}' ")
         if self.cur.rowcount > 0:
-            return "User Updated Successfully"
+            return {'message':"User Updated Successfully"}
         else:
-            return "Nothing to update"
+            return {'message':"Nothing to update"}
     
     def user_delete_model(self,id):
         self.cur.execute(f"DELETE FROM users where id = {id}")
         if self.cur.rowcount > 0:
-            return "User delete Successfully"
+            return {'message':"User delete Successfully"}
         else:
-            return "Nothing to delete"
+            return {'message':"Nothing to delete"}
     
