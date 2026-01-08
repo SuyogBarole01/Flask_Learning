@@ -48,9 +48,9 @@ class user_model():
     def user_patch_model(self, data, id):
         qry = 'UPDATE users SET '
         for key in data:
-            qry += f'{key} = {data[key]},'
+            qry += f"{key} = '{data[key]}',"
         qry = qry[:-1]
-        qry += f' WHERE id = {id}'
+        qry += f" WHERE id = {id}"
         
         self.cur.execute(qry)
         if self.cur.rowcount > 0:
