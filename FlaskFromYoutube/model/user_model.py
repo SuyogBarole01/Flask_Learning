@@ -28,7 +28,7 @@ class user_model():
             return make_response({'message':"No data found"}, 204)
     
     def user_addone_model(self,data):
-        self.cur.execute(f"INSERT INTO users(name, email, phone, password) VALUES ('{data['name']}','{data['email']}','{data['phone']}','{data['password']}')")
+        self.cur.execute(f"INSERT INTO users(id, name, email, phone, password) VALUES ('{data['id']}','{data['name']}','{data['email']}','{data['phone']}','{data['password']}')")
         return make_response({'message':"User Created Successfully"},201)
     
     def user_update_model(self,data):
@@ -45,3 +45,15 @@ class user_model():
         else:
             return make_response({'message':"Nothing to delete"},204)
     
+    def user_patch_model(self, data, id):
+        qry = 'UPDATE users SET '
+        for key in data:
+            qry += f'{key} = {data[key]},'
+        qry = qry[:-1]
+        qry += f' WHERE id = {id}'
+        
+        self.cur.execute(qry)
+        if self.cur.rowcount > 0:
+            return make_response({'message':"User Updated Successfully"},201)
+        else:
+            return make_response({'message':"Nothing to update"},202)
