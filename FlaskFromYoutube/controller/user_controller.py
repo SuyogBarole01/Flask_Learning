@@ -23,3 +23,7 @@ def user_delete_controller(id):
 @app.route('/user/patch/<id>', methods = ['PATCH'])
 def user_patch_controller(id):
     return u_model.user_patch_model(request.form, id)
+
+@app.route('/user/getall/limit/<limit>/page/<page>', methods = ['GET'])
+def user_pagination_controller(limit, page):
+    return u_model.user_pagination_model(limit, page)
