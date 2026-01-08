@@ -21,7 +21,9 @@ class user_model():
 
         # result will contain list of dictionaries. These dictionaries will have are rows of table in database.
         if len(result)>0:
-            return make_response({'payload': result},200)
+            res = make_response({'payload': result},200)
+            res.headers['Access-Control-Allow-Origin'] = "*"
+            return res
         else:
             return make_response({'message':"No data found"}, 204)
     
